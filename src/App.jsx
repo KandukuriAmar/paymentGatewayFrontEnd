@@ -7,7 +7,7 @@ dotenv.config();
 
 function App() {
   const handlePayment = async () => {
-    const data = await axios.post("http://localhost:5000/create-order", {amount});
+    const data = await axios.post("https://razorpaymentgatewaybackend.onrender.com/create-order", {amount});
   
     const options = {
       key: process.env.RAZORPAY_KEY_ID,
@@ -21,7 +21,7 @@ function App() {
       },
       handler: async(response) => {
         try {
-          await axios.post("http://localhost:5000/validate-payment", response);
+          await axios.post("https://razorpaymentgatewaybackend.onrender.com/validate-payment", response);
           alert("payment successful");
         } catch(err) {
           console.error(err);
