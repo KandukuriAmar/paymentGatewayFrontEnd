@@ -1,16 +1,15 @@
 import './App.css'
 import axios from 'axios'
 import { useState } from 'react'
-import dotenv from 'dotenv'
-
-dotenv.config();
 
 function App() {
   const handlePayment = async () => {
-    const data = await axios.post("https://razorpaymentgatewaybackend.onrender.com/create-order", {amount});
+    const backurl = import.meta.env.VITE_BACKEND_URL
+    const razorpaykey = import.meta.env.RAZORPAY_KEY_ID
+    const data = await axios.post("${backurl}/create-order", {amount});
   
     const options = {
-      key: process.env.RAZORPAY_KEY_ID,
+      key: razorpaykey,
       amount: data.data.amount,
       currency: "INR",
       name: "Razorpay",
@@ -21,7 +20,7 @@ function App() {
       },
       handler: async(response) => {
         try {
-          await axios.post("https://razorpaymentgatewaybackend.onrender.com/validate-payment", response);
+          await axios.post("${backurl}/validate-payment", response);
           alert("payment successful");
         } catch(err) {
           console.error(err);
